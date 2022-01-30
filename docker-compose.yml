@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  db:
+    image: "postgres" # use latest official postgres version
+    env_file:
+      - ./config/ceae-db.env # configure postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+      - ./scripts/1-init-ceae-db.sql:/docker-entrypoint-initdb.d/1-init-ceae-db.sql
+      - ./scripts/2-create-tables-ceae-db.sql:/docker-entrypoint-initdb.d/2-create-tables-ceae-db.sql
+volumes:
+  db-data: # named volumes can be managed easier using docker-compose
