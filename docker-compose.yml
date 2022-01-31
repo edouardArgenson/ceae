@@ -4,6 +4,8 @@ services:
     image: "postgres" # use latest official postgres version
     env_file:
       - ./config/ceae-db.env # configure postgres
+    ports:
+      - '5432:5432'
     volumes:
       - db-data:/var/lib/postgresql/data/ # persist data even if container shuts down
       - ./scripts/1-init-ceae-db.sql:/docker-entrypoint-initdb.d/1-init-ceae-db.sql
