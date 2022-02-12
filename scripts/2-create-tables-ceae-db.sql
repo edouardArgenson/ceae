@@ -18,7 +18,9 @@ CREATE TABLE weather_data (
     rain_3h NUMERIC(4, 2) NOT NULL CHECK (rain_3h >= 0),
     clouds SMALLINT NOT NULL CHECK (clouds >= 0 AND clouds <= 100),
     visibility INT NOT NULL CHECK (visibility >= 0),
-    timezone INT NOT NULL
+    timezone INT NOT NULL,
+
+    PRIMARY KEY (city, country, datetime)
 );
 
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ceae;
