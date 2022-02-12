@@ -20,3 +20,5 @@ CREATE TABLE weather_data (
     visibility INT NOT NULL CHECK (visibility >= 0),
     timezone INT NOT NULL
 );
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ceae;
