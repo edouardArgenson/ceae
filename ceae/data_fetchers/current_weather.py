@@ -7,7 +7,7 @@ import yaml
 
 URL_TEMPLATE = Template(
     "api.openweathermap.org/data/2.5/weather?q=$city,,$country_code&"
-    f"units=$units&appid=$api_key"
+    "units=$units&appid=$api_key"
 )
 
 
