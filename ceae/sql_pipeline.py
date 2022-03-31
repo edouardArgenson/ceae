@@ -1,18 +1,17 @@
 import datetime
 import os
-from string import Template
 
 from sqlalchemy import create_engine
 
 from data_fetchers.current_weather import fetch_cities_current_weather
+from helpers.database_helpers import build_database_uri
 from storage import sql_storage
 
 # config.
 OPENWEATHER_API_KEY = os.environ.get("OPENWEATHER_API_KEY")
 REQUEST_CONFIG_PATH = "config/openweather_cities.yml"
 
-db_url_template = Template("$dialect://$user:$password@$host/$dbname")
-database_url = db_url_template.substitute(
+database_uri = build_database_uri(
     dialect=os.environ.get("CEAE_DB_DIALECT"),
     user=os.environ.get("CEAE_DB_USER"),
     password=os.environ.get("CEAE_DB_PASSWORD"),
@@ -20,8 +19,8 @@ database_url = db_url_template.substitute(
     dbname=os.environ.get("CEAE_DB_NAME"),
 )
 print("expected db url: postgresql+psycopg2://ceae:ceae@localhost:5432/ceae")
-print(f"got db url: {database_url}")
-SQL_ENGINE = create_engine(database_url, echo=True)
+print(f"got db url: {database_uri}")
+SQL_ENGINE = create_engine(database_uri, echo=True)
 
 
 print("--------------")
