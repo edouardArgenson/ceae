@@ -1,5 +1,7 @@
+import os
 from logging.config import fileConfig
 
+from ceae.helpers.database_helpers import build_database_uri
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
@@ -8,6 +10,17 @@ from alembic import context
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+# We set the db uri here instead of the .ini file,
+# so we can use the environment variables.
+db_uri = build_database_uri(
+    dialect=os.environ.get("CEAE_DB_DIALECT"),
+    user=os.environ.get("CEAE_DB_USER"),
+    password=os.environ.get("CEAE_DB_PASSWORD"),
+    host=os.environ.get("CEAE_DB_HOST"),
+    dbname=os.environ.get("CEAE_DB_NAME"),
+)
+config.set_main_option("sqlalchemy.url", db_uri)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
