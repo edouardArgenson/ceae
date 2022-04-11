@@ -1,5 +1,16 @@
 version: '3.8'
 services:
+  ceae:
+    image: "ceae"
+    env_file:
+      - ./config/.env
+    command: bash -c "poetry run alembic upgrade head && poetry run python ./ceae/sql_pipeline.py"
+    depends_on:
+      - db
+    volumes:
+      - ./config/.env:/ceae/config/.env
+      - ./config/openweather_cities.yml:/ceae/config/openweather_cities.yml
+
   db:
     image: "postgres"
     env_file:
@@ -9,5 +20,6 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data/
       - ./scripts/init-ceae-db.sql:/docker-entrypoint-initdb.d/init-ceae-db.sql
+
 volumes:
   db-data:
