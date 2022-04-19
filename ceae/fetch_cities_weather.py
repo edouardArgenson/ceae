@@ -22,7 +22,7 @@ database_uri = build_database_uri(
 SQL_ENGINE = create_engine(database_uri, echo=True)
 
 print("--------------")
-print(f"Launching pipeline (now='{datetime.datetime.now()}'.")
+print(f"Launching pipeline (now='{datetime.datetime.now()}').")
 
 weather_df = fetch_cities_current_weather(
     request_config_path=REQUEST_CONFIG_PATH,
