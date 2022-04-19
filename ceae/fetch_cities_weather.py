@@ -18,8 +18,6 @@ database_uri = build_database_uri(
     host=os.environ.get("CEAE_DB_HOST"),
     dbname=os.environ.get("CEAE_DB_NAME"),
 )
-print("expected db url: postgresql+psycopg2://ceae:ceae@localhost:5432/ceae")
-print(f"got db url: {database_uri}")
 SQL_ENGINE = create_engine(database_uri, echo=True)
 
 
