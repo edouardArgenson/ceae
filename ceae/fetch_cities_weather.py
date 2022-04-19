@@ -7,6 +7,7 @@ from data_fetchers.current_weather import fetch_cities_current_weather
 from helpers.database_helpers import build_database_uri
 from storage import sql_storage
 
+
 # config.
 OPENWEATHER_API_KEY = os.environ.get("OPENWEATHER_API_KEY")
 REQUEST_CONFIG_PATH = "config/openweather_cities.yml"
@@ -20,10 +21,8 @@ database_uri = build_database_uri(
 )
 SQL_ENGINE = create_engine(database_uri, echo=True)
 
-
 print("--------------")
 print(f"Launching pipeline (now='{datetime.datetime.now()}'.")
-
 
 weather_df = fetch_cities_current_weather(
     request_config_path=REQUEST_CONFIG_PATH,
