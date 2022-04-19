@@ -4,7 +4,7 @@ services:
     image: "ceae"
     env_file:
       - ./config/.env
-    command: bash -c "poetry run alembic upgrade head && poetry run python ./ceae/sql_pipeline.py"
+    command: bash -c "poetry run alembic upgrade head && poetry run python ./ceae/fetch_cities_weather.py"
     depends_on:
       - db
     volumes:
