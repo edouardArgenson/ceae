@@ -34,6 +34,8 @@ RUN poetry check && poetry install --no-root
 COPY ./alembic /ceae/alembic
 COPY alembic.ini .
 
+COPY ./db /ceae/db
+
 COPY ./ceae /ceae/ceae
 
 # Avoid running the container as `root`.
