@@ -7,6 +7,7 @@ cron_logs/
 notebooks/
 data/
 
+scripts/aws
 scripts/install-poetry-custom.py
 scripts/poetry_adds
 scripts/test_fetch_poetry_metadata_urllib.py
