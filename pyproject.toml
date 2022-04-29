@@ -17,6 +17,8 @@ alembic = "^1.7.6"
 psycopg2 = "^2.9.3"
 importlib-metadata = "^4.11.3"
 importlib-resources = "^5.6.0"
+uvicorn = "^0.17.6"
+fastapi = "^0.75.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
