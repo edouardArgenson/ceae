@@ -1,5 +1,19 @@
 version: '3.8'
 services:
+  api:
+    image: "ceae-api"
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    # TODO we could split this .env in two. This service does not 
+    #  need the openweather api key.
+    env_file:
+      - ./config/.env
+    depends_on:
+      - db
+    ports:
+      - '80:80'
+
   ceae:
     image: "ceae"
     build:
