@@ -31,15 +31,10 @@ COPY poetry.lock pyproject.toml ./
 RUN poetry check && poetry install --no-root
 
 # Copy alembic files.
-WORKDIR /ceae/alembic
-COPY ./alembic .
-WORKDIR /ceae
+COPY ./alembic /ceae/alembic
 COPY alembic.ini .
 
-WORKDIR /ceae/ceae
-COPY ./ceae .
-
-WORKDIR /ceae
+COPY ./ceae /ceae/ceae
 
 # Avoid running the container as `root`.
 USER ceae
