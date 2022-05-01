@@ -2,6 +2,9 @@ version: '3.8'
 services:
   ceae:
     image: "ceae"
+    build:
+      context: .
+      dockerfile: ceae/Dockerfile
     env_file:
       - ./config/.env
     command: bash -c "poetry run alembic upgrade head && poetry run python ./ceae/fetch_cities_weather.py"
