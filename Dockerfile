@@ -30,14 +30,14 @@ COPY poetry.lock pyproject.toml ./
 
 RUN poetry check && poetry install --no-root
 
-WORKDIR /ceae/ceae
-COPY ./ceae .
-
 # Copy alembic files.
 WORKDIR /ceae/alembic
 COPY ./alembic .
 WORKDIR /ceae
 COPY alembic.ini .
+
+WORKDIR /ceae/ceae
+COPY ./ceae .
 
 WORKDIR /ceae
 
