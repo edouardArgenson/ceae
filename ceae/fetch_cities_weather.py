@@ -2,10 +2,10 @@ import datetime
 import os
 import sys
 
+from db.helpers import build_database_uri
 from sqlalchemy import create_engine
 
 from data_fetchers.current_weather import fetch_cities_current_weather
-from helpers.database_helpers import build_database_uri
 from storage import sql_storage
 
 

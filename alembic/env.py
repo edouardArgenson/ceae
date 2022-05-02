@@ -1,7 +1,7 @@
 import os
 from logging.config import fileConfig
 
-from ceae.helpers.database_helpers import build_database_uri
+from db.helpers import build_database_uri
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
