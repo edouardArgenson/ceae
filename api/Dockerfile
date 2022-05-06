@@ -30,11 +30,12 @@ COPY poetry.lock pyproject.toml ./
 
 RUN poetry check && poetry install --no-root
 
+COPY ./db /ceae/db
+RUN poetry run pip install --no-cache --no-index db/
+
 # Copy alembic files.
 COPY ./alembic /ceae/alembic
 COPY alembic.ini .
-
-COPY ./db /ceae/db
 
 COPY ./api /ceae/api
 
