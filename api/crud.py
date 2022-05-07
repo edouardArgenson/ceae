@@ -2,6 +2,19 @@ from db import models
 from sqlalchemy.orm import Session
 
 
+def get_city(country_code: str, city_name, session: Session):
+    return (
+        session
+        .query(models.WeatherData.city)
+        .filter(
+            models.WeatherData.country == country_code,
+            models.WeatherData.city == city_name,
+        )
+        .distinct(models.WeatherData.country, models.WeatherData.city)
+        .all()
+    )
+
+
 def get_countries_with_cities(session: Session):
     return (
         session
