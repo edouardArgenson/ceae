@@ -34,3 +34,29 @@ def get_country_with_cities(country_code: str, session: Session):
         .order_by(models.WeatherData.city)
         .all()
     )
+
+
+def get_weather(country_code: str, city_name: str, session: Session):
+    return (
+        session
+        .query(
+            models.WeatherData.datetime,
+            models.WeatherData.timezone,
+            models.WeatherData.main,
+            models.WeatherData.description,
+            models.WeatherData.temperature,
+            models.WeatherData.wind_speed,
+            models.WeatherData.wind_dir,
+            models.WeatherData.humidity,
+            models.WeatherData.rain_1h,
+            models.WeatherData.rain_3h,
+            models.WeatherData.clouds,
+            models.WeatherData.visibility,
+        )
+        .filter(
+            models.WeatherData.country == country_code,
+            models.WeatherData.city == city_name,
+        )
+        .order_by(models.WeatherData.datetime)
+        .all()
+    )

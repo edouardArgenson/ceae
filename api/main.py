@@ -76,3 +76,21 @@ def city(
     if len(cities_qs) == 0:
         raise HTTPException(status_code=404, detail="City not found.")
     return [{"name": q.city} for q in cities_qs][0]
+
+
+@ceae_api.get(
+    "/countries/{country_code}/cities/{city_name}/weather",
+    response_model=List[schemas.Weather],
+)
+def weather(
+    country_code: str, city_name: str, session: Session = Depends(get_session)
+):
+    cities_qs = crud.get_city(
+        country_code=country_code, city_name=city_name, session=session
+    )
+    if len(cities_qs) == 0:
+        raise HTTPException(status_code=404, detail="City not found.")
+
+    return crud.get_weather(
+        country_code=country_code, city_name=city_name, session=session
+    )
