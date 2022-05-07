@@ -1,3 +1,6 @@
+import datetime as dt
+from typing import Optional
+
 from db import models
 from sqlalchemy.orm import Session
 
@@ -36,7 +39,23 @@ def get_country_with_cities(country_code: str, session: Session):
     )
 
 
-def get_weather(country_code: str, city_name: str, session: Session):
+def get_weather(
+    country_code: str,
+    city_name: str,
+    start_date: Optional[dt.datetime],
+    end_date: Optional[dt.datetime],
+    session: Session,
+):
+    criterions = [
+        models.WeatherData.country == country_code,
+        models.WeatherData.city == city_name,
+    ]
+
+    if start_date:
+        criterions.append(models.WeatherData.datetime >= start_date)
+    if end_date:
+        criterions.append(models.WeatherData.datetime < end_date)
+
     return (
         session
         .query(
@@ -53,10 +72,7 @@ def get_weather(country_code: str, city_name: str, session: Session):
             models.WeatherData.clouds,
             models.WeatherData.visibility,
         )
-        .filter(
-            models.WeatherData.country == country_code,
-            models.WeatherData.city == city_name,
-        )
+        .filter(*criterions)
         .order_by(models.WeatherData.datetime)
         .all()
     )

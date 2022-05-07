@@ -1,5 +1,6 @@
+import datetime as dt
 from collections import defaultdict
-from typing import List
+from typing import List, Optional
 
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
@@ -83,7 +84,11 @@ def city(
     response_model=List[schemas.Weather],
 )
 def weather(
-    country_code: str, city_name: str, session: Session = Depends(get_session)
+    country_code: str,
+    city_name: str,
+    start_date: Optional[dt.datetime] = None,
+    end_date: Optional[dt.datetime] = None,
+    session: Session = Depends(get_session),
 ):
     cities_qs = crud.get_city(
         country_code=country_code, city_name=city_name, session=session
@@ -92,5 +97,9 @@ def weather(
         raise HTTPException(status_code=404, detail="City not found.")
 
     return crud.get_weather(
-        country_code=country_code, city_name=city_name, session=session
+        country_code=country_code,
+        city_name=city_name,
+        start_date=start_date,
+        end_date=end_date,
+        session=session,
     )
