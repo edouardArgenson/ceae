@@ -47,3 +47,17 @@ def country_with_cities(
         "code": country_code,
         "cities": [{"name": q.city} for q in countries_qs]
     }
+
+
+@ceae_api.get(
+    "/countries/{country_code}/cities", response_model=List[schemas.City]
+)
+def cities(
+    country_code: str, session: Session = Depends(get_session)
+):
+    countries_qs = crud.get_country_with_cities(
+        country_code=country_code, session=session
+    )
+    if len(countries_qs) == 0:
+        raise HTTPException(status_code=404, detail="Country not found.")
+    return [{"name": q.city} for q in countries_qs]
