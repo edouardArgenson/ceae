@@ -28,10 +28,13 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 WORKDIR /ceae
 COPY poetry.lock pyproject.toml ./
 
-RUN poetry check && poetry install --no-root
+RUN poetry export -f requirements.txt --without-hashes \
+    --output requirements.txt
+
+RUN pip install -r requirements.txt && rm requirements.txt
 
 COPY ./db /ceae/db
-RUN poetry run pip install --no-cache --no-index db/
+RUN pip install --no-cache --no-index db/
 
 # Copy alembic files.
 COPY ./alembic /ceae/alembic

@@ -21,7 +21,7 @@ services:
       dockerfile: ceae/Dockerfile
     env_file:
       - ./config/.env
-    command: bash -c "poetry run alembic upgrade head && poetry run python ./ceae/fetch_cities_weather.py"
+    command: bash -c "alembic upgrade head && python ./ceae/fetch_cities_weather.py"
     depends_on:
       - db
     volumes:
