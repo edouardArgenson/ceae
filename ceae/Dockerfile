@@ -1,17 +1,13 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.9-slim
+FROM python:3.9-slim AS base
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PYTHONDONTWRITEBYTECODE=1 \
-    POETRY_VERSION=1.1.13 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_CREATE=false
+    PYTHONDONTWRITEBYTECODE=1
 
 RUN groupadd -r ceae && useradd --no-log-init -r -g ceae ceae
 
 RUN apt-get update && apt-get install -y \
-    curl \
     # Psycopg2 dependencies:
     gcc \
     python3-dev \
@@ -20,17 +16,33 @@ RUN apt-get update && apt-get install -y \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
+FROM python:3.9-slim as poetry
+
+ENV POETRY_VERSION=1.1.13 \
+    POETRY_HOME="/opt/poetry" \
+    POETRY_VIRTUALENVS_CREATE=false
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    # Clean apt-get cache:
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
 # Install poetry.
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - \
-    && chown -R ceae:ceae /opt/poetry/
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
 WORKDIR /ceae
-COPY poetry.lock pyproject.toml ./
 
+COPY poetry.lock pyproject.toml ./
 RUN poetry export -f requirements.txt --without-hashes \
     --output requirements.txt
 
+FROM base as runtime
+
+WORKDIR /ceae
+
+COPY --from=poetry ceae/requirements.txt .
 RUN pip install -r requirements.txt && rm requirements.txt
 
 COPY ./db /ceae/db
