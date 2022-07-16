@@ -17,6 +17,16 @@ meta = MetaData(
 )
 Base = declarative_base(metadata=meta)
 
+class WindEnergyGenerationPrediction(Base):
+    __tablename__ = "wind_energy_generation_prediction"
+
+    country = Column(VARCHAR(length=32), primary_key=True)
+    datetime = Column(TIMESTAMP(timezone=False), primary_key=True)
+    timezone = Column(INTEGER, nullable=False)
+    prediction = Column(FLOAT, nullable=False)
+    unit = Column(VARCHAR(length=32))
+
+
 class WeatherData(Base):
     __tablename__ = "weather_data"
 
