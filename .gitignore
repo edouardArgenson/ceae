@@ -1,6 +1,8 @@
 __pycache__/
 *.pyc
 
+.vscode
+
 github_access_token
 config/
 cron_logs/
