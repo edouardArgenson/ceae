@@ -12,6 +12,20 @@ from wind_energy_predictions.pipeline import run_prediction_pipeline
 
 
 def run_pipeline() -> bool:
+    """
+    Service entrypoint.
+
+    Runs a two-steps pipeline:
+        - Fetch data from OpenWeather API.
+        - Run a ML pipeline to perform wind energy generation
+        predictions.
+
+    Args:
+        None
+
+    Returns:
+        bool: True if the pipeline ran successfully.
+    """
     # config.
     OPENWEATHER_API_KEY = os.environ.get("OPENWEATHER_API_KEY")
     REQUEST_CONFIG_PATH = "config/openweather_cities.yml"
