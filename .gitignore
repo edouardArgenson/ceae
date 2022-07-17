@@ -6,6 +6,7 @@ __pycache__/
 github_access_token
 !config
 config/*
+!config/ceae-db.env
 !config/.env
 !config/openweather_cities.yml
 cron_logs/
