@@ -13,7 +13,9 @@ URL_TEMPLATE = Template(
 )
 
 
-def fetch_cities_current_weather(request_config_path: str, api_key: str) -> pd.DataFrame:
+def fetch_cities_current_weather(
+    request_config_path: str, api_key: str
+) -> pd.DataFrame:
     """Queries openweather current weather API for a list of cities."""
     with open(request_config_path, "r") as stream:
         request_config = yaml.safe_load(stream)
