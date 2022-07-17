@@ -5,4 +5,4 @@ source config/.env
 set a+
 
 poetry run alembic upgrade head
-poetry run python ceae/fetch_cities_weather.py
+poetry run python ceae/run_pipeline.py
