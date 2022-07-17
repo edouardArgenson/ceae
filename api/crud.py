@@ -76,3 +76,37 @@ def get_weather(
         .order_by(models.WeatherData.datetime)
         .all()
     )
+
+
+def get_wind_energy_generation_predictions(
+    start_date: Optional[dt.datetime],
+    end_date: Optional[dt.datetime],
+    session: Session,
+):
+    criterions = []
+
+    if start_date:
+        criterions.append(
+            models.WindEnergyGenerationPrediction.datetime >= start_date
+        )
+    if end_date:
+        criterions.append(
+            models.WindEnergyGenerationPrediction.datetime < end_date
+        )
+
+    return (
+        session
+        .query(
+            models.WindEnergyGenerationPrediction.country,
+            models.WindEnergyGenerationPrediction.datetime,
+            models.WindEnergyGenerationPrediction.timezone,
+            models.WindEnergyGenerationPrediction.prediction,
+            models.WindEnergyGenerationPrediction.unit,
+        )
+        .filter(*criterions)
+        .order_by(
+            models.WindEnergyGenerationPrediction.country,
+            models.WindEnergyGenerationPrediction.datetime,
+        )
+        .all()
+    )

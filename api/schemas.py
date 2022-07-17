@@ -29,3 +29,14 @@ class Weather(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class WindEnergyGenerationPrediction(BaseModel):
+    country: str
+    datetime: dt.datetime
+    timezone: int
+    prediction: float
+    unit: str
+
+    class Config:
+        orm_mode = True

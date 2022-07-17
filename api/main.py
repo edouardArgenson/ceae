@@ -103,3 +103,19 @@ def weather(
         end_date=end_date,
         session=session,
     )
+
+
+@ceae_api.get(
+    "/wind-energy-generation-predictions",
+    response_model=List[schemas.WindEnergyGenerationPrediction],
+)
+def wind_energy_generation_predictions(
+    start_date: Optional[dt.datetime] = None,
+    end_date: Optional[dt.datetime] = None,
+    session: Session = Depends(get_session),
+):
+    return crud.get_wind_energy_generation_predictions(
+        start_date=start_date,
+        end_date=end_date,
+        session=session,
+    )
