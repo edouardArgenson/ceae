@@ -4,7 +4,10 @@ __pycache__/
 .vscode
 
 github_access_token
-config/
+!config
+config/*
+!config/.env
+!config/openweather_cities.yml
 cron_logs/
 notebooks/
 data/
