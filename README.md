@@ -36,6 +36,8 @@ The project runs with Docker using Docker Compose.
 
 2. You need to get an openweather api key and add it in the config files.
 
+You can get a free api key there: https://openweathermap.org/price.
+
 Add a `config/openweather-api-key.env` file containing your key, for instance:
 ```
 OPENWEATHER_API_KEY=uselessfakekey
