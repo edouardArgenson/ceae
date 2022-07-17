@@ -4,6 +4,8 @@ from string import Template
 import pandas as pd
 import requests
 import yaml
+from sqlalchemy import engine
+from storage import sql_storage
 
 URL_TEMPLATE = Template(
     "api.openweathermap.org/data/2.5/weather?q=$city,,$country_code&"
@@ -71,3 +73,22 @@ def fetch_cities_current_weather(request_config_path: str, api_key: str) -> pd.D
             print(err)
 
     return pd.DataFrame(data=fetched_data)
+
+
+def run_fetch_cities_current_weather_pipeline(
+    request_config_path: str, api_key: str, engine: engine.Engine
+) -> pd.DataFrame:
+    """
+    Fetches current weather for all cities in config and store it in 
+    DB.
+    """
+    weather_df = fetch_cities_current_weather(
+        request_config_path=request_config_path,
+        api_key=api_key,
+    )
+
+    sql_storage.dump_append(
+        df=weather_df, sql_table_name="weather_data", engine=engine
+    )
+
+    return weather_df
