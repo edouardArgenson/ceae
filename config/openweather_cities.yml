@@ -1,0 +1,26 @@
+units: metric
+cities:
+  - name: Paris
+    country_code: FR
+  - name: Vannes
+    country_code: FR
+  - name: New York
+    country_code: US
+  - name: Washington D.C.
+    country_code: US
+  - name: Boston
+    country_code: US
+  - name: Houston
+    country_code: US
+  - name: San Francisco
+    country_code: US
+  - name: Singapore
+    country_code: SG
+  - name: Sydney
+    country_code: AU
+  - name: New Delhi
+    country_code: IN
+  - name: Buenos Aires
+    country_code: AR
+  - name: London
+    country_code: UK
