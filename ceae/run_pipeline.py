@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 from data_fetchers.current_weather import (
     run_fetch_cities_current_weather_pipeline
 )
+from wind_energy_predictions.pipeline import run_prediction_pipeline
 
 
 def run_pipeline() -> bool:
@@ -27,11 +28,13 @@ def run_pipeline() -> bool:
     print("--------------")
     print(f"Launching pipeline (now='{datetime.datetime.now()}').")
 
-    run_fetch_cities_current_weather_pipeline(
+    weather_df = run_fetch_cities_current_weather_pipeline(
         request_config_path=REQUEST_CONFIG_PATH,
         api_key=OPENWEATHER_API_KEY,
         engine=SQL_ENGINE,
     )
+
+    run_prediction_pipeline(weather_data_df=weather_df, engine=SQL_ENGINE)
 
     return True
 
