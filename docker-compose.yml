@@ -5,8 +5,6 @@ services:
     build:
       context: .
       dockerfile: api/Dockerfile
-    # TODO we could split this .env in two. This service does not 
-    #  need the openweather api key.
     env_file:
       - ./config/.env
     depends_on:
@@ -21,11 +19,11 @@ services:
       dockerfile: ceae/Dockerfile
     env_file:
       - ./config/.env
+      - ./config/openweather-api-key.env
     command: bash -c "alembic upgrade head && python ./ceae/run_pipeline.py"
     depends_on:
       - db
     volumes:
-      - ./config/.env:/ceae/config/.env
       - ./config/openweather_cities.yml:/ceae/config/openweather_cities.yml
 
   db:
