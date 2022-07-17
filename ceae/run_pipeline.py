@@ -1,4 +1,5 @@
 import datetime
+import logging
 import os
 import sys
 
@@ -9,6 +10,8 @@ from data_fetchers.current_weather import (
     run_fetch_cities_current_weather_pipeline
 )
 from wind_energy_predictions.pipeline import run_prediction_pipeline
+
+logger = logging.getLogger(__name__)
 
 
 def run_pipeline() -> bool:
@@ -39,8 +42,7 @@ def run_pipeline() -> bool:
     )
     SQL_ENGINE = create_engine(database_uri, echo=True)
 
-    print("--------------")
-    print(f"Launching pipeline (now='{datetime.datetime.now()}').")
+    logger.info(f"Launching pipeline (now='{datetime.datetime.now()}').")
 
     weather_df = run_fetch_cities_current_weather_pipeline(
         request_config_path=REQUEST_CONFIG_PATH,

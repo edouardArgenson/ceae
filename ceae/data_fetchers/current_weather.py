@@ -1,4 +1,5 @@
 import datetime
+import logging
 from string import Template
 
 import pandas as pd
@@ -6,6 +7,8 @@ import requests
 import yaml
 from sqlalchemy import engine
 from storage import sql_storage
+
+logger = logging.getLogger(__name__)
 
 URL_TEMPLATE = Template(
     "api.openweathermap.org/data/2.5/weather?q=$city,,$country_code&"
@@ -35,7 +38,7 @@ def fetch_cities_current_weather(
             api_key=api_key,
         )
 
-        print(f"requesting data for {city_name}..")
+        logger.info(f"requesting data for {city_name}..")
 
         try:
             response = requests.get("http://" + url)
@@ -68,11 +71,11 @@ def fetch_cities_current_weather(
                 "timezone" : content['timezone'],
             }
 
-            print(f"..succesfuly fetched {city_name} data.")
+            logger.info(f"..succesfuly fetched {city_name} data.")
             fetched_data.append(data)
 
         except requests.exceptions.HTTPError as err:
-            print(err)
+            logger.info(err)
 
     return pd.DataFrame(data=fetched_data)
 
